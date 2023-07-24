@@ -1,0 +1,21 @@
+[package]
+name = "BitBrutal"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+aes = "0.8.3"
+block-cipher = "0.99.99"
+clap = { version = "4.3.19", features = ["derive"] }
+colored = "2.0.4"
+crossbeam = "0.8.2"
+hex = "0.4.3"
+indicatif = "0.17.5"
+itertools = "0.11.0"
+num_cpus = "1.16.0"
+openssl = "0.10.55"
+rayon = "1.7.0"
+ring = "0.16.20"
+sha2 = "0.10.7"

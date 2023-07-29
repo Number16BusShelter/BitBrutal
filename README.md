@@ -1,4 +1,3 @@
-
 # BitBrutal - Rust Phrase Generator
 
 This Rust program generates all possible changes of `r` simultaneous positions in a given phrase with characters from a given alphabet.
@@ -48,20 +47,40 @@ cargo run -- --help
 
 ### Usage with hashcat
 
+Use tmux to create session
+
+```bash
+tmux new-session
+```
+
 After we've generated a file we can run it with mode `0` of hashcat
 
 ```bash
-hashcat -a 0 -m 11300 ./hash.txt ./output.txt
+hashcat -a 0 -m 11300 ./hash.txt ./output.txt --status --status-timer 30
+```
+
+Now we can safely detach from session by pressing `ctrl+b, d` and connect back to it using
+
+```bash
+tmux attach-session
+```
+
+While our test wordlist is running we can generate next files for test
+
+### Helpful commands
+
+Combine two files into one
+
+```bash
+cat ./output-1.txt ./output-2.txt > ./output-master.txt
+```
+
+Remove duplicates
+
+```bash
+sort ./output-master.txt | uniq > ./output-clean.txt
 ```
 
 ### Contributing
 
 We appreciate all contributions. If you plan to contribute new features, utility functions, or extensions to the core, please first open an issue to discuss what you would like to add.
-
-## License
-
-This project is licensed under the MIT License - see the `LICENSE` file for details.
-
----
-
-Remember, this is just a starting point for your README. You should add more specific information about your project, such as its purpose, how to use it, how to contribute, etc. Also, don't forget to include your actual `LICENSE` file if you're planning to make your project open source.

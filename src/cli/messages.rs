@@ -19,5 +19,30 @@ pub fn push_message(log_type: Type, message: &str) {
         Type::Success => format!("\n{}{}{}", "[".bold(), "SUCCESS".bold().green(), "]".bold())
     };
 
-    eprint!("{}", format!("{} {}", prefix, message))
+    eprint!("{}\n", format!("{} {}", prefix, message))
+}
+
+pub mod logger {
+    use super::push_message;
+    use super::Type;
+
+    pub fn info(message: &str) {
+        return push_message(Type::Info, message)
+    }
+
+    pub fn skip(message: &str) {
+        return push_message(Type::_Skipped, message)
+    }
+
+    pub fn warn(message: &str) {
+        return push_message(Type::_Warning, message)
+    }
+
+    pub fn error(message: &str) {
+        return push_message(Type::Error, message)
+    }
+
+    pub fn sussess(message: &str) {
+        return push_message(Type::Success, message)
+    }
 }

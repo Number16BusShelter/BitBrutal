@@ -6,6 +6,8 @@ use colored::*;
 
 use crate::core::dict_generator::dictionary_generator::start_dictionary_generation;
 
+use super::messages::logger;
+
 pub fn banner() {
     let banner = include_str!("./banner");
 
@@ -159,9 +161,6 @@ pub fn main() {
     banner();
     let cli = CLI::parse();
     // You can check the value provided by positional arguments, or option arguments
-    // if let Some(name) = cli.name.as_deref() {
-    //     println!("Value for name: {name}");
-    // }
 
     match &cli.command {
         Some(Commands::Mutations {
@@ -172,7 +171,7 @@ pub fn main() {
             output, 
             name 
         }) => {
-            println!("Running mutations...");
+            logger::info(&format!("Running mutations..."));
             let p;
             let a;
             let d;
@@ -184,21 +183,21 @@ pub fn main() {
             } else {
                 p = "password"
             }
-            println!("Target phrase is: {:?}", p);
+            logger::info(&format!("Target phrase is: {:?}", p));
 
             if let Some(alphabet) = alphabet.as_deref() {
                 a = alphabet;
             } else {
                 a = DEFAULT_ALPHABET;
             }
-            println!("Alphabet is: {:?}", a);
+            logger::info(&format!("Alphabet is: {:?}", a));
 
             if let Some(dry_run) = dry_run {
                 d = *dry_run;
             } else {
                 d = false;
             }
-            println!("Dry run mode: {:?}", d);
+            logger::info(&format!("Dry run mode: {:?}", d));
             
             if let Some(output) = output.as_os_str().to_str() {
                 o = output
@@ -206,7 +205,7 @@ pub fn main() {
                 o = "./output.txt"
             }
 
-            println!("Output file: {:?}", o);
+            logger::info(&format!("Output file: {:?}", o));
 
             if let Some(replacements) = replacements {
                 r = replacements;
@@ -214,7 +213,7 @@ pub fn main() {
                 r = &2
             }
 
-            println!("Number of replacements: {}", r);
+            logger::info(&format!("Number of replacements: {}", r));
 
             start_dictionary_generation(
                 p, 
@@ -229,7 +228,7 @@ pub fn main() {
             output, 
             name 
         }) => {
-            println!("Running substring...");
+            logger::info(&format!("Running substring..."));
             let o;
             let p;
 
@@ -238,7 +237,7 @@ pub fn main() {
             } else {
                 p = "password"
             }
-            println!("Target phrase is: {:?}", p);
+            logger::info(&format!("Target phrase is: {:?}", p));
 
             if let Some(output) = output.as_os_str().to_str() {
                 o = output
@@ -246,7 +245,7 @@ pub fn main() {
                 o = "./output.txt"
             }
 
-            println!("Output file: {:?}", o);
+            logger::info(&format!("Output file: {:?}", o));
 
             // Do substring
 
@@ -258,7 +257,7 @@ pub fn main() {
             name, 
             hash 
         }) => {
-            println!("Running examinations...");
+            logger::info(&format!("Running examinations..."));
 
             let f;
             let m;
@@ -269,18 +268,18 @@ pub fn main() {
             } else {
                 f = "./dict.txt"
             }
-            println!("Test file: {:?}", f);
+            logger::info(&format!("Test file: {:?}", f));
             
             if let Some(mode) = mode.as_deref() {
                 m = mode
             } else {
                 m = "default"
             }
-            println!("Mode: {:?}", m);
+            logger::info(&format!("Mode: {:?}", m));
 
             h = hash;
 
-            println!("Hash: {:?}", h);
+            logger::info(&format!("Hash: {:?}", h));
             // Do something
 
         }

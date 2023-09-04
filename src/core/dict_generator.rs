@@ -112,7 +112,7 @@ use crate::cli;
 
 /// This module provides utility functions for generating and managing dictionaries.
 pub(crate) mod dictionary_generator {
-    use crate::cli;
+    use crate::cli::{self, messages::logger};
     use std::{fs::OpenOptions, io::Write};
     use indicatif::ProgressBar;
     use itertools::Itertools;
@@ -254,11 +254,11 @@ pub(crate) mod dictionary_generator {
     ) {
         // Calculate the total number of outcomes
         let num_outcomes = num_outcomes(phrase.len(), alphabet.len(), replacements);
-        println!("Number of outcomes: {}", num_outcomes);
+        logger::info(&format!("Number of outcomes: {}", num_outcomes));
 
         // Approximate and display the file size
         let file_size_gb = approximate_file_size(phrase.len(), alphabet.len(), replacements);
-        println!("Approximate file size: {}", file_size_gb);
+        logger::info(&format!("Approximate file size: {}", file_size_gb));
 
         // Initialize a progress bar
         let pb = cli::progress_bar::get_progress_bar(num_outcomes);

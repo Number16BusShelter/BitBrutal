@@ -1,4 +1,4 @@
-use clap::{Command, Arg, ArgMatches, ArgAction};
+use clap::{Command, Arg, ArgMatches, ArgAction, builder::PossibleValue};
 use colored::*;
 
 pub fn banner() {
@@ -7,71 +7,84 @@ pub fn banner() {
     eprintln!("{}", banner.bold().red())
 }
 
-// #[derive(Parser, Debug)]
-// #[command(author, version, about, long_about = None)]
-// struct Args {
-//     /// Target phrase
-//     #[arg(short, long, default_value = "password")]
-//     phrase: String,
+fn cli_command_mutations() -> Command {
+    return Command::new("mutations")
+    .about("Generate all possible phrase mutations with given alphabet and number of replacements")
+    .arg(Arg::new("PHRASE")
+        .short('p')
+        .long("phrase")
+        .help("Phrase to create mutations from")
+        .value_name("PHRASE")
+        .required(false)
+        .default_value("Test")
+        .action(ArgAction::Set)
+    )
+    .arg(
+        Arg::new("ALPHABET")
+        .short('a')
+        .long("alphabet")
+        .value_name("ALPHABET")
+        .help("Sets the alphabet to use for replacements")
+    )
+    .arg(Arg::new("REPLACEMENTS")
+        .short('r')
+        .long("replacements")
+        .value_name("REPLACEMENTS")
+        .help("Sets the number of simultaneous replacements to make in the phrase")
+        .value_parser(clap::value_parser!(i32))
+    )
+    .arg(Arg::new("DRY_RUN")
+        .short('d')
+        .long("dry_run")
+        .num_args(0)
+        .help("Doesn't generate the outcomes, only calculates the number of outcomes and the approximate file size")
+        .value_parser(clap::value_parser!(bool)),
+    )
+    .arg(Arg::new("OUTPUT_FILE")
+        .short('o')
+        .long("output")
+        .value_name("FILE")
+        .help("Sets the output file (default is output.txt)")
+    )
+}
 
-//     /// Alphabet
-//     #[arg(short, long, default_value = "abc")]
-//     alphabet: String,
+fn cli_command_test_dict() -> Command {
+    return Command::new("test_dict")
+    .about("Test given dict file with BTC wallet.dat sha (from JR)")
+}
 
-//     /// Number of replacements
-//     #[arg(short, long, default_value_t = 1)]
-//     replacements: i32,
+fn cli_command_substring() -> Command {
+    return Command::new("substring")
+    .about("Get all substrings from a given string")
+    .arg(Arg::new("PHRASE")
+        .short('p')
+        .long("phrase")
+        .help("Phrase to create mutations from")
+        .value_name("PHRASE")
+        .required(false)
+        .default_value("Test")
+        .action(ArgAction::Set)
+    )
+    .arg(Arg::new("OUTPUT_FILE")
+        .short('o')
+        .long("output")
+        .value_name("FILE")
+        .help("Sets the output file (default is output.txt)")
+    )
+}
 
-//     /// Dry run
-//     #[arg(short, long, default_value_t = false)]
-//     dry_run: bool,
 
-//     /// Output file
-//     #[arg(short, long, default_value = "./output.txt")]
-//     output: String
-// }
-
-
-
-pub fn get_matches() -> ArgMatches {
-    Command::new("BitBrutal")
+fn main_cli_app() -> Command  {
+    return Command::new("BitBrutal")
         .version("1.0")
         .author("Number16BusShelter")
         .about("Password mutation generator utility written in Rust.")
-        .arg(Arg::new("PHRASE")
-            .short('p')
-            .long("phrase")
-            .help("Phrase to create mutations from")
-            .value_name("PHRASE")
-            .required(false)
-            .default_value("Test")
-            .action(ArgAction::Set)
-        )
-        .arg(
-            Arg::new("ALPHABET")
-            .short('a')
-            .long("alphabet")
-            .value_name("ALPHABET")
-            .help("Sets the alphabet to use for replacements")
-        )
-        .arg(Arg::new("REPLACEMENTS")
-            .short('r')
-            .long("replacements")
-            .value_name("REPLACEMENTS")
-            .help("Sets the number of simultaneous replacements to make in the phrase")
-            .value_parser(clap::value_parser!(i32))
-        )
-        .arg(Arg::new("DRY_RUN")
-            .short('d')
-            .long("dry_run")
-            .help("Doesn't generate the outcomes, only calculates the number of outcomes and the approximate file size")
-            .value_parser(clap::value_parser!(bool)),
-        )
-        .arg(Arg::new("OUTPUT_FILE")
-            .short('o')
-            .long("output")
-            .value_name("FILE")
-            .help("Sets the output file (default is output.txt)")
-        )
-        .get_matches()
+        .subcommand(cli_command_test_dict())
+        .subcommand(cli_command_mutations())
+        .subcommand(cli_command_substring())
+
+}
+
+pub fn get_matches() -> ArgMatches {
+    main_cli_app().get_matches()
 }

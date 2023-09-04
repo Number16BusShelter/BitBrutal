@@ -1,8 +1,8 @@
 #![feature(thread_id_value)]
 
-use std::time::Instant;
+// use std::time::Instant;
 
-use core::dict_generator::start_dictionary_generation;
+// use core::dict_generator::dictionary_generator::start_dictionary_generation;
 use core::{controller::CheckFn};
 // use core::hash::check;
 use core::hash::ring::check as ring;
@@ -10,15 +10,17 @@ use core::hash::aes::check as aes;
 use std::collections::{HashMap, VecDeque};
 use std::path::PathBuf;
 
+use clap::Parser;
+
 use crate::core::components::HashComponents;
 mod core;
-mod cli;
+mod cli; 
 
 
 // fn main() {
 //     let method = "ring";
 
-//     let alphabet: &str = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//     let alphabet: &str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 //     let hash: &str = "";
 //     let hash_components = HashComponents::new(&hash);
@@ -42,69 +44,73 @@ mod cli;
 // 4y 8W a7 aG dV j5 q9 AL Lb Na Oo RC
 
 
-const DEFAULT_ALPHABET: &str = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-fn main() {
-    // let phrase = "ABCDE";
-    // let alphabet = "FG";
-    // let replacements = 1;
+// const DEFAULT_ALPHABET: &str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+// fn main() {
+//     // let phrase = "ABCDE";
+//     // let alphabet = "FG";
+//     // let replacements = 1;
 
-    // let alphabet: &str = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    // let phrase: &str = "";
-    // let replacements: i32 = 3;
+//     // let alphabet: &str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//     // let phrase: &str = "";
+//     // let replacements: i32 = 3;
 
-    // let dry_run = true;
+//     // let dry_run = true;
 
-    // start_dictionary_generation(phrase, alphabet, replacements.try_into().unwrap(), dry_run);
-    // println!("Generation complete!");
+//     // start_dictionary_generation(phrase, alphabet, replacements.try_into().unwrap(), dry_run);
+//     // println!("Generation complete!");
 
-    let start_time = Instant::now();
+//     let start_time = Instant::now();
 
-    cli::cli::banner();
-    let matches = cli::cli::get_matches();
-    // You can check the value provided by positional arguments, or option arguments
+//     cli::cli::banner();
+//     let matches = cli::cli::get_matches();
+//     // You can check the value provided by positional arguments, or option arguments
 
-    let phrase = match matches.get_one::<String>("PHRASE") {
-        Some(value) => value,
-        None => "password"
-    };
+//     let phrase = match matches.get_one::<String>("PHRASE") {
+//         Some(value) => value,
+//         None => "password"
+//     };
 
-    println!("Target phrase is: {}", phrase);
+//     println!("Target phrase is: {}", phrase);
 
-    let alphabet = match matches.get_one::<String>("ALPHABET") {
-        Some(value) => value,
-        None => DEFAULT_ALPHABET
-    };
+//     let alphabet = match matches.get_one::<String>("ALPHABET") {
+//         Some(value) => value,
+//         None => DEFAULT_ALPHABET
+//     };
 
-    println!("Alphabet is: {}", alphabet);
+//     println!("Alphabet is: {}", alphabet);
 
-    let dry_run = match  matches.get_one::<bool>("DRY_RUN") {
-        Some(value) => value,
-        None => &false
-    };
+//     let dry_run = match  matches.get_one::<bool>("DRY_RUN") {
+//         Some(value) => value,
+//         None => &false
+//     };
 
-    println!("Dry run mode: {}", dry_run);
+//     println!("Dry run mode: {}", dry_run);
 
-    let replacements = match matches.get_one::<i32>("REPLACEMENTS") {
-        Some(value) => value,
-        None => &1
-    };
+//     let replacements = match matches.get_one::<i32>("REPLACEMENTS") {
+//         Some(value) => value,
+//         None => &1
+//     };
 
-    println!("Number of replacements: {}", replacements);
+//     println!("Number of replacements: {}", replacements);
 
-    let output_file= match matches.get_one::<String>("OUTPUT_FILE") {
-        Some(value) => value,
-        None => "./output.txt"
-    };
+//     let output_file= match matches.get_one::<String>("OUTPUT_FILE") {
+//         Some(value) => value,
+//         None => "./output.txt"
+//     };
 
-    println!("Output file: {}", output_file);
+//     println!("Output file: {}", output_file);
 
-    start_dictionary_generation(phrase, alphabet, *replacements as usize, *dry_run, output_file);
-    let duration = start_time.elapsed();
-    println!("\n\nGeneration complete in {:.2?}", duration);
-}
+//     start_dictionary_generation(phrase, alphabet, *replacements as usize, *dry_run, output_file);
+//     let duration = start_time.elapsed();
+//     println!("\n\nGeneration complete in {:.2?}", duration);
+// }
 
 
 // 9 char: 1861818336 + 20019552 + 138384 + 558 = 1881976830
 // 10 char: 3103030560 + 28599360 + 172980 + 620 + 1881976830 * 10 = 
 // 
 
+
+fn main() {
+    cli::cli_copy::main();
+}

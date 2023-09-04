@@ -2,6 +2,34 @@
 
 This Rust program generates all possible changes of `r` simultaneous positions in a given phrase with characters from a given alphabet.
 
+
+```bash
+@@@@@@@   @@@  @@@@@@@  @@@@@@@   @@@@@@@   @@@  @@@  @@@@@@@   @@@@@@   @@@   
+@@@@@@@@  @@@  @@@@@@@  @@@@@@@@  @@@@@@@@  @@@  @@@  @@@@@@@  @@@@@@@@  @@@   
+@@!  @@@  @@!    @@!    @@!  @@@  @@!  @@@  @@!  @@@    @@!    @@!  @@@  @@!   
+!@   @!@  !@!    !@!    !@   @!@  !@!  @!@  !@!  @!@    !@!    !@!  @!@  !@!   
+@!@!@!@   !!@    @!!    @!@!@!@   @!@!!@!   @!@  !@!    @!!    @!@!@!@!  @!!   
+!!!@!!!!  !!!    !!!    !!!@!!!!  !!@!@!    !@!  !!!    !!!    !!!@!!!!  !!!   
+!!:  !!!  !!:    !!:    !!:  !!!  !!: :!!   !!:  !!!    !!:    !!:  !!!  !!:   
+:!:  !:!  :!:    :!:    :!:  !:!  :!:  !:!  :!:  !:!    :!:    :!:  !:!   :!:  
+ :: ::::   ::     ::     :: ::::  ::   :::  ::::: ::     ::    ::   :::   :: ::::  
+:: : ::   :       :     :: : ::    :   : :   : :  :      :      :   : :  : :: : :  
+                                                                               
+Password mutation generator utility written in Rust.
+
+Usage: BitBrutal [OPTIONS]
+
+Options:
+  -p, --phrase <PHRASE>              Phrase to create mutations from [default: Test]
+  -a, --alphabet <ALPHABET>          Sets the alphabet to use for replacements
+  -r, --replacements <REPLACEMENTS>  Sets the number of simultaneous replacements to make in the phrase
+  -d, --dry_run <DRY_RUN>            Doesn't generate the outcomes, only calculates the number of outcomes and the approximate file size [possible values: true, false]
+  -o, --output <FILE>                Sets the output file (default is output.txt)
+  -h, --help                         Print help
+  -V, --version                      Print version
+```
+
+
 ## Description
 
 This tool is useful for generating all the possible variations of a phrase, given a certain number of characters to replace and a set of characters to use for replacement. It has uses in scenarios such as password cracking, brute-force algorithm testing, etc.
@@ -57,7 +85,6 @@ For more details on how to use the command line interface, use the `--help` flag
 cargo run -- --help
 ```
 
-
 ### Release build
 
 ```bash
@@ -92,7 +119,6 @@ When our list is tested we can get the result by running
 hashcat -a 0 -m 11300 --session bb-1 ./hash.txt ./bitbrutal-wl-1.txt --status --status-timer 30 -o output.pot
  --show
 ```
-
 
 ### Helpful commands
 

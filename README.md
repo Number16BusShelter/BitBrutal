@@ -4,29 +4,32 @@ This Rust program generates all possible changes of `r` simultaneous positions i
 
 
 ```bash
-@@@@@@@   @@@  @@@@@@@  @@@@@@@   @@@@@@@   @@@  @@@  @@@@@@@   @@@@@@   @@@   
-@@@@@@@@  @@@  @@@@@@@  @@@@@@@@  @@@@@@@@  @@@  @@@  @@@@@@@  @@@@@@@@  @@@   
-@@!  @@@  @@!    @@!    @@!  @@@  @@!  @@@  @@!  @@@    @@!    @@!  @@@  @@!   
-!@   @!@  !@!    !@!    !@   @!@  !@!  @!@  !@!  @!@    !@!    !@!  @!@  !@!   
-@!@!@!@   !!@    @!!    @!@!@!@   @!@!!@!   @!@  !@!    @!!    @!@!@!@!  @!!   
-!!!@!!!!  !!!    !!!    !!!@!!!!  !!@!@!    !@!  !!!    !!!    !!!@!!!!  !!!   
-!!:  !!!  !!:    !!:    !!:  !!!  !!: :!!   !!:  !!!    !!:    !!:  !!!  !!:   
-:!:  !:!  :!:    :!:    :!:  !:!  :!:  !:!  :!:  !:!    :!:    :!:  !:!   :!:  
+@@@@@@@   @@@  @@@@@@@  @@@@@@@   @@@@@@@   @@@  @@@  @@@@@@@   @@@@@@   @@@       
+@@@@@@@@  @@@  @@@@@@@  @@@@@@@@  @@@@@@@@  @@@  @@@  @@@@@@@  @@@@@@@@  @@@       
+@@!  @@@  @@!    @@!    @@!  @@@  @@!  @@@  @@!  @@@    @@!    @@!  @@@  @@!       
+!@   @!@  !@!    !@!    !@   @!@  !@!  @!@  !@!  @!@    !@!    !@!  @!@  !@!       
+@!@!@!@   !!@    @!!    @!@!@!@   @!@!!@!   @!@  !@!    @!!    @!@!@!@!  @!!       
+!!!@!!!!  !!!    !!!    !!!@!!!!  !!@!@!    !@!  !!!    !!!    !!!@!!!!  !!!       
+!!:  !!!  !!:    !!:    !!:  !!!  !!: :!!   !!:  !!!    !!:    !!:  !!!  !!:       
+:!:  !:!  :!:    :!:    :!:  !:!  :!:  !:!  :!:  !:!    :!:    :!:  !:!   :!:      
  :: ::::   ::     ::     :: ::::  ::   :::  ::::: ::     ::    ::   :::   :: ::::  
 :: : ::   :       :     :: : ::    :   : :   : :  :      :      :   : :  : :: : :  
-                                                                               
+                                                                                   
 Password mutation generator utility written in Rust.
 
-Usage: BitBrutal [OPTIONS]
+Usage: BitBrutal [OPTIONS] [COMMAND]
+
+Commands:
+  mutations   Generate all possible phrase mutations with given alphabet and number of replacements
+  rearrange   Rearranges characters in a given string
+  substrings  Get all substrings from a given string
+  examine     Test given dict file with BTC wallet.dat sha (from JR)
+  help        Print this message or the help of the given subcommand(s)
 
 Options:
-  -p, --phrase <PHRASE>              Phrase to create mutations from [default: Test]
-  -a, --alphabet <ALPHABET>          Sets the alphabet to use for replacements
-  -r, --replacements <REPLACEMENTS>  Sets the number of simultaneous replacements to make in the phrase
-  -d, --dry_run <DRY_RUN>            Doesn't generate the outcomes, only calculates the number of outcomes and the approximate file size [possible values: true, false]
-  -o, --output <FILE>                Sets the output file (default is output.txt)
-  -h, --help                         Print help
-  -V, --version                      Print version
+  -d, --debug...  Turn debugging information on
+  -h, --help      Print help
+  -V, --version   Print version
 ```
 
 

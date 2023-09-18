@@ -5,6 +5,8 @@ use clap::{Parser, Subcommand};
 use colored::*;
 
 use crate::core::dict_generator::dictionary_generator::start_dictionary_generation;
+use crate::core::rearrange::rearrange;
+use crate::core::substrings::generate_substrings;
 
 use super::messages::logger;
 
@@ -89,7 +91,32 @@ enum Commands {
             short, long, 
             required=false,
             help="Sets the output file (default is output.txt)",
-            default_value="./output.txt",
+            default_value="./dicts/mutations-output.txt",
+            value_parser=clap::value_parser!(PathBuf)
+        )]
+        output: PathBuf,
+    },
+
+    #[command(
+        name="rearrange",
+        about="Rearranges characters in a given string", 
+        long_about = None
+    )]
+    Rearrange {
+        name: Option<String>,
+
+        #[arg(
+            short, long, 
+            required=true,
+            help="Phrase to create mutations from"
+        )]
+        phrase: Option<String>,
+
+        #[arg(
+            short, long, 
+            required=false,
+            help="Sets the output file (default is output.txt)",
+            default_value="./dicts/rearrange-output.txt",
             value_parser=clap::value_parser!(PathBuf)
         )]
         output: PathBuf,
@@ -114,7 +141,7 @@ enum Commands {
             short, long, 
             required=false,
             help="Sets the output file (default is output.txt)",
-            default_value="./output.txt",
+            default_value="./dicts/substrings-output.txt",
             value_parser=clap::value_parser!(PathBuf)
         )]
         output: PathBuf,
@@ -202,7 +229,7 @@ pub fn main() {
             if let Some(output) = output.as_os_str().to_str() {
                 o = output
             } else {
-                o = "./output.txt"
+                o = "./mutations-output.txt"
             }
 
             logger::info(&format!("Output file: {:?}", o));
@@ -242,13 +269,41 @@ pub fn main() {
             if let Some(output) = output.as_os_str().to_str() {
                 o = output
             } else {
-                o = "./output.txt"
+                o = "./substring-output.txt"
             }
 
             logger::info(&format!("Output file: {:?}", o));
-
+            
+            generate_substrings(p, o);
             // Do substring
+        }
 
+        Some(Commands::Rearrange {
+            phrase,
+            output, 
+            name 
+        }) => {
+            logger::info(&format!("Running rearrange..."));
+            let o;
+            let p;
+
+            if let Some(phrase) = phrase.as_deref() {
+                p = phrase;
+            } else {
+                p = "password"
+            }
+            logger::info(&format!("Target phrase is: {:?}", p));
+
+            if let Some(output) = output.as_os_str().to_str() {
+                o = output
+            } else {
+                o = "./rearrange-output.txt"
+            }
+
+            logger::info(&format!("Output file: {:?}", o));
+            
+            rearrange(p, o);
+            // Do substring
         }
     
         Some(Commands::Examine {

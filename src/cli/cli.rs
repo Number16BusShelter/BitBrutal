@@ -48,6 +48,26 @@ fn cli_command_mutations() -> Command {
     )
 }
 
+fn cli_command_rearrange() -> Command {
+    return Command::new("rearrange")
+    .about("Rearranges characters in a given string")
+    .arg(Arg::new("PHRASE")
+        .short('p')
+        .long("phrase")
+        .help("Phrase to create mutations from")
+        .value_name("PHRASE")
+        .required(false)
+        .default_value("Test")
+        .action(ArgAction::Set)
+    )
+    .arg(Arg::new("OUTPUT_FILE")
+        .short('o')
+        .long("output")
+        .value_name("FILE")
+        .help("Sets the output file (default is output.txt)")
+    )
+}
+
 fn cli_command_test_dict() -> Command {
     return Command::new("test_dict")
     .about("Test given dict file with BTC wallet.dat sha (from JR)")
@@ -82,6 +102,7 @@ fn main_cli_app() -> Command  {
         .subcommand(cli_command_test_dict())
         .subcommand(cli_command_mutations())
         .subcommand(cli_command_substring())
+        .subcommand(cli_command_rearrange())
 
 }
 
